@@ -14,25 +14,20 @@
  * limitations under the License.
  */
 
-extern crate cfg_if;
-extern crate wasm_bindgen;
+// TODO: write with rust.
 
-mod utils;
+import EvilProxy from "./proxy";
 
-use cfg_if::cfg_if;
-use wasm_bindgen::prelude::*;
+// init the evail proxy
+let proxy = new EvilProxy();
 
-cfg_if! {
-    // When the `wee_alloc` feature is enabled, use `wee_alloc` as the global
-    // allocator.
-    if #[cfg(feature = "wee_alloc")] {
-        extern crate wee_alloc;
-        #[global_allocator]
-        static ALLOC: wee_alloc::WeeAlloc = wee_alloc::WeeAlloc::INIT;
-    }
-}
-
-#[wasm_bindgen]
-pub fn greet() -> String {
-    "Hello, wasm-worker!".to_string()
-}
+// Register the event handle for `fetch`
+addEventListener("fetch", (event) => {
+  try {
+    return event.respondWith(proxy.handle(event.request));
+  } catch (e) {
+    return new Response(`system error: ${e}`, {
+      status: 500,
+    });
+  }
+});

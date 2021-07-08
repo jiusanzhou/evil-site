@@ -1,16 +1,1 @@
-addEventListener("fetch", (event) => {
-  event.respondWith(handleRequest(event.request));
-});
-
-/**
- * Fetch and log a request
- * @param {Request} request
- */
-async function handleRequest(request) {
-  const { greet } = wasm_bindgen;
-  await wasm_bindgen(wasm);
-  const greeting = greet();
-  return new Response(greeting, { status: 200 });
-}
-
-// js vension
+((h,i)=>{let j=function(){return this}(),e={},f=(c,d)=>{let g=typeof c;if(g==="string")return require(c);if(g==="number"){let b=e[c],a;return b||(b=e[c]={exports:{}},h[c].call(j,f,b.exports,b)),a=b.exports,d&&(!a||!a.__esModule)&&((!a||typeof a!=="object"&&typeof a!=="function")&&(a={}),"default"in a||Object.defineProperty(a,"default",{get:()=>b.exports,enumerable:!0})),a}Object.defineProperty(c,"__esModule",{value:!0});for(let b in d)Object.defineProperty(c,b,{get:d[b],enumerable:!0})};return f(i)})({0(){const d=a=>b=>b.method.toLowerCase()===a.toLowerCase(),l=d("connect"),m=d("delete"),n=d("get"),o=d("head"),p=d("options"),q=d("patch"),r=d("post"),s=d("put"),t=d("trace"),f=(a,b)=>e=>e.headers.get(a)===b,F=a=>f("host",a.toLowerCase()),G=a=>f("referrer",a.toLowerCase()),c=a=>b=>{const e=new URL(b.url),g=e.pathname,v=g.match(a)||[];return v[0]===g};class u{constructor(){this.routes=[],this._default=this._notfound}_notfound(a){return new Response("Page not found",{status:404,statusText:"not found",headers:{"content-type":"text/plain"}})}_handle(a,b){return this.routes.push({conditions:a,handler:b}),this}handle(a,b){return this._handle([c(a)],b)}connect(a,b){return this._handle([l,c(a)],b)}delete(a,b){return this._handle([m,c(a)],b)}get(a,b){return this._handle([n,c(a)],b)}head(a,b){return this._handle([o,c(a)],b)}options(a,b){return this._handle([p,c(a)],b)}patch(a,b){return this._handle([q,c(a)],b)}post(a,b){return this._handle([r,c(a)],b)}put(a,b){return this._handle([s,c(a)],b)}trace(a,b){return this._handle([t,c(a)],b)}all(a){return this._handle([],a)}default(a){return this._default=a||this._notfound,this}serve(a){const b=this.resolve(a);return b?b.handler(a):this._default(a)}resolve(a){return this.routes.find(b=>!b.conditions||Array.isArray(b)&&!b.conditions.length?!0:typeof b.conditions==="function"?b.conditions(a):b.conditions.every(e=>e(a)))}}const j=u;class k{version="v0.0.1";constructor(){this.count=0,this.router=new j(),this.router.handle("/")}async proxy(a){const b={mode:"cors",method:a.method}}async handle(a){return this.count++,new Response(`Hello worker! We have handled ${this.count} times`,{status:200})}}const h=k;let i=new h();addEventListener("fetch",a=>{try{return a.respondWith(i.handle(a.request))}catch(b){return new Response(`system error: ${b}`,{status:500})}})}},0);
